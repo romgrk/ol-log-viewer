@@ -8,9 +8,12 @@ import {
  , SET_LOGS
  , SET_SEARCH
  , SET_PROCESS_VISIBILITY
+ , SET_LEVEL_VISIBILITY
+ , SET_LOG_DENSITY
 } from './actions';
 import {
-  createDefaultFilters
+    createDefaultFilters
+  , createDefaultUI
 } from './models';
 
 function fileReducer(state = {}, action) {
@@ -36,8 +39,11 @@ function fileReducer(state = {}, action) {
   }
 }
 
-function uiReducer(state = {}, action) {
+function uiReducer(state = createDefaultUI(), action) {
   switch (action.type) {
+    case SET_LOG_DENSITY: {
+      return { ...state, logDensity: action.value }
+    }
     default:
       return state;
   }
@@ -57,6 +63,13 @@ function filtersReducer(state = createDefaultFilters(), action) {
         [action.process]: action.visible
       }
       return { ...state, processes }
+    }
+    case SET_LEVEL_VISIBILITY: {
+      const levels = {
+        ...state.levels,
+        [action.level]: action.visible
+      }
+      return { ...state, levels }
     }
     default:
       return state;

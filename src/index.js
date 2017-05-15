@@ -1,3 +1,9 @@
+
+window.IS_ELECTRON = window.process ? true : false
+
+if (!window.IS_ELECTRON)
+  window.require = () => ({})
+
 const fs = window.require('fs')
 const { join } = window.require('path')
 
@@ -34,11 +40,12 @@ render(
   document.querySelector('#root')
 )
 
-fs.readdir(logsPath, (err, files) => {
-  const newestFile = getNewestFile(logsPath, files.filter(f => f.startsWith('ppw')))
-  store.dispatch(setFileByPath(join(logsPath, newestFile)))
-})
 
+if (window.IS_ELECTRON)
+  fs.readdir(logsPath, (err, files) => {
+    const newestFile = getNewestFile(logsPath, files.filter(f => f.startsWith('ppw')))
+    store.dispatch(setFileByPath(join(logsPath, newestFile)))
+  })
 
 
 if (module.hot) {

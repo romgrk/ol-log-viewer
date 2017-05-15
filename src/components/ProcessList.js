@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import cx from 'classname';
 
 import { setProcessVisibility } from '../actions'
+import MultiSelect from './MultiSelect';
 
 const mapStateToProps = state => ({
   processes: state.filters.processes
@@ -16,17 +16,9 @@ class ProcessList extends Component {
     const { dispatch, processes } = this.props
 
     return (
-      <div className='ProcessList btn-group'>
-        { Object.keys(processes).map(name =>
-            <button
-              type="button"
-              className={cx('btn btn-default', { active: processes[name] })}
-              onClick={() => dispatch(setProcessVisibility(name, !processes[name]))}
-            >
-              { name }
-            </button>
-        )}
-      </div>
+      <MultiSelect
+        values={processes}
+        onChangeValue={(process, value) => dispatch(setProcessVisibility(process, value))}/>
     )
   }
 }

@@ -17,7 +17,9 @@ export const SET_LOGS         = 'SET_LOGS'
 
 export const SET_SEARCH             = 'SET_SEARCH'
 export const SET_PROCESS_VISIBILITY = 'SET_PROCESS_VISIBILITY'
+export const SET_LEVEL_VISIBILITY   = 'SET_LEVEL_VISIBILITY'
 
+export const SET_LOG_DENSITY = 'SET_LOG_DENSITY'
 
 let watcher
 
@@ -44,14 +46,15 @@ export function setFile(file) {
 
       dispatch({ type: SET_LOGS, logs: logs, processes: processes })
 
-      watcher = fs.watch(file.path, (type, filename) => {
-        fs.readFile(file.path, (err, buffer) => {
-          if (err)
-            return console.error(err)
+      if (window.IS_ELECTRON)
+        watcher = fs.watch(file.path, (type, filename) => {
+          fs.readFile(file.path, (err, buffer) => {
+            if (err)
+              return console.error(err)
 
-          dispatch(setFileContent(buffer.toString()))
+            dispatch(setFileContent(buffer.toString()))
+          })
         })
-      })
 
     })
     .catch(error => { })
@@ -100,6 +103,8 @@ export function setFileByPath(path) {
 
 export function setFileContent(content) {
   return (dispatch, getState) => {
+    const state = getState()
+
     dispatch({
       type: SET_FILE_CONTENT,
       content
@@ -109,6 +114,10 @@ export function setFileContent(content) {
     const processes = {}
 
     logs.forEach(log => processes[log.process] = true)
+    Object.keys(state.filters.processes).forEach(process => {
+      if (!state.filters.processes[process] && processes[process])
+        processes[process] = false
+    })
 
     dispatch({ type: SET_LOGS, logs: logs, processes: processes })
   }
@@ -127,5 +136,20 @@ export function setProcessVisibility(process, visible) {
     type: SET_PROCESS_VISIBILITY,
     process,
     visible
+  }
+}
+
+export function setLevelVisibility(level, visible) {
+  return {
+    type: SET_LEVEL_VISIBILITY,
+    level,
+    visible
+  }
+}
+
+export function setLogDensity(value) {
+  return {
+    type: SET_LOG_DENSITY,
+    value
   }
 }

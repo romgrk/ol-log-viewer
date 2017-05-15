@@ -13,13 +13,28 @@ const mapDispatchToProps = dispatch => ({
 class SearchBox extends Component {
   constructor(props) {
     super(props)
+    this.onDocumentKeyDown = this.onDocumentKeyDown.bind(this)
+  }
+
+  componentDidMount() {
+    document.addEventListener('keydown', this.onDocumentKeyDown)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.onDocumentKeyDown)
+  }
+
+  onDocumentKeyDown(event) {
+    if (event.ctrlKey && event.key === 'f') {
+      this.refs.input.focus()
+    }
   }
 
   render() {
     const { dispatch, searchValue } = this.props
 
     return (
-      <div className='SearchBox input-group'>
+      <div className='SearchBox'>
         <input
           type='text'
           ref='input'
@@ -28,11 +43,6 @@ class SearchBox extends Component {
           value={searchValue}
           onChange={ev => dispatch(setSearch(ev.target.value))}
         />
-        <span className='input-group-btn'>
-          <button className='btn btn-default'>
-            Clear
-          </button>
-        </span>
       </div>
     )
   }

@@ -71,9 +71,16 @@ class DropZone extends Component {
 
 
   render() {
+    const { file } = this.props
+
+    const className = cx('DropZone', {
+      'is-drag-over': this.state.over,
+      'is-file-loaded': Boolean(file),
+    })
+
     return (
       <div
-        className={cx('DropZone', { 'is-drag-over': this.state.over })}
+        className={className}
         onChange={this.onChange}
         onDrag={this.onDrag}
         onDragStart={this.onDragStart}
@@ -85,6 +92,8 @@ class DropZone extends Component {
       >
         <div>
           <h3>
+            <b>{ file ? file : 'Log viewer' }</b>
+            <br/>
             <a onClick={() => this.refs.input.click()}>Select file</a> or Drop file
           </h3>
           <input

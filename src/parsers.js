@@ -18,15 +18,34 @@ export function parseLogFile(content) {
     const lastIndex = lines.findIndex(isProcLine)
     const lastProcLine = lines[lastIndex]
 
-    lines.splice(lastIndex)
+    if (lastIndex !== -1)
+      lines.splice(lastIndex)
+
+    const hasError = lines.some((line) => /^ERROR/.test(line)) 
+    const hasWarning = lines.some((line) => /^WARN/.test(line))  
+    const hasDebug = lines.some((line) => /^DEBUG/.test(line)) 
+    const hasInfo = lines.some((line) => /^INFO/.test(line))  
+
+    const level =
+      hasError ? 'error' :
+      hasWarning ? 'warning' :
+      hasDebug ? 'debug' : 'info'
+
+    const name    = report.match(/WPROC: (\w+)/)[1]
+    const process = name.replace(/_[0-9A-Z]{15}$/, '')
 
     return {
-      index:       i,
-      process:     report.match(/WPROC: (\w+)/)[1],
-      start:       extractTimestamp(firstProcLine),
-      elapsedTime: extractElapsedTime(lastProcLine),
-      lines:       lines.map(parseLine),
-      hasError:    lines.some((line) => /^ERROR/.test(line))
+        index:       i
+      , process:     process
+      , name:        name
+      , start:       extractTimestamp(firstProcLine)
+      , elapsedTime: lastProcLine ? extractElapsedTime(lastProcLine) : undefined
+      , lines:       lines.map(parseLine)
+      , hasError:    hasError
+      , hasWarning:  hasWarning
+      , hasDebug:    hasDebug
+      , hasInfo:     hasInfo
+      , level:       level
     }
   })
 }
