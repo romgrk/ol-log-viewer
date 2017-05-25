@@ -26,6 +26,7 @@ class SearchBox extends Component {
 
   onDocumentKeyDown(event) {
     if (event.ctrlKey && event.key === 'f') {
+      event.preventDefault()
       this.refs.input.focus()
     }
   }

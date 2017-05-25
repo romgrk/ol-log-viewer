@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import cx from 'classname';
 
-class Select extends Component {
+class DropDown extends Component {
   constructor(props) {
     super(props)
     this.onDocumentClick = this.onDocumentClick.bind(this)
@@ -31,16 +31,26 @@ class Select extends Component {
   }
 
   render() {
-    const { value, options, onChange, children, size } = this.props
+    const {
+        label
+      , options
+      , onChange
+      , children
+      , size
+      , align
+    } = this.props
     const { visible } = this.state
 
     const btnClassName =
-      'Select-button btn btn-default' + (size ? ` btn-${size}` : '')
+      'DropDown-button btn btn-default' + (size ? ` btn-${size}` : '')
+
+    const listClassName =
+      'DropDown-list dropdown-menu ' + (align === 'right' ?  'dropdown-menu-right' : '')
 
     return (
       <div
         ref='container'
-        className={cx('Select dropdown', { open: visible })}
+        className={cx('DropDown dropdown', { open: visible })}
       >
         <button
           ref='button'
@@ -48,18 +58,17 @@ class Select extends Component {
           className={btnClassName}
           onClick={this.onClick}
         >
-          { children || value }
+          { children || label }
         </button>
         <div
           ref='list'
-          className='Select-list dropdown-menu dropdown-menu-right'
+          className={listClassName}
         >
-          { options.map(d =>
-              <button
-                key={d.value}
+          { options.map((d, i) =>
+              <button key={i}
                 type='button'
-                className={cx('list-group-item', { active: value === d.value })}
-                onClick={() => onChange(d.value)}
+                className={cx('list-group-item', d.className || '')}
+                onClick={d.onClick}
               >
                 { d.label }
               </button>
@@ -70,4 +79,4 @@ class Select extends Component {
   }
 }
 
-export default Select;
+export default DropDown;

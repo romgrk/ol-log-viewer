@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import cx from 'classname';
-
-//import './DropZone.css';
-
 
 class DropZone extends Component {
   constructor(props) {
@@ -24,6 +20,26 @@ class DropZone extends Component {
 
   setDragOver(value) {
     this.setState({ over: value })
+  }
+
+  componentDidMount() {
+    document.addEventListener('drag',      this.onDrag)
+    document.addEventListener('dragstart', this.onDragStart)
+    document.addEventListener('dragend',   this.onDragEnd)
+    document.addEventListener('dragover',  this.onDragOver)
+    document.addEventListener('dragenter', this.onDragEnter)
+    document.addEventListener('dragleave', this.onDragLeave)
+    document.addEventListener('drop',      this.onDrop)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('drag',      this.onDrag)
+    document.removeEventListener('dragstart', this.onDragStart)
+    document.removeEventListener('dragend',   this.onDragEnd)
+    document.removeEventListener('dragover',  this.onDragOver)
+    document.removeEventListener('dragenter', this.onDragEnter)
+    document.removeEventListener('dragleave', this.onDragLeave)
+    document.removeEventListener('drop',      this.onDrop)
   }
 
   onDrag(event) {
@@ -79,28 +95,11 @@ class DropZone extends Component {
     })
 
     return (
-      <div
-        className={className}
-        onChange={this.onChange}
-        onDrag={this.onDrag}
-        onDragStart={this.onDragStart}
-        onDragEnd={this.onDragEnd}
-        onDragOver={this.onDragOver}
-        onDragEnter={this.onDragEnter}
-        onDragLeave={this.onDragLeave}
-        onDrop={this.onDrop}
-      >
-        <div>
-          <h3>
-            <b>{ file ? file : 'Log viewer' }</b>
-            <br/>
-            <a onClick={() => this.refs.input.click()}>Select file</a> or Drop file
+      <div className={className} >
+        <div className='DropZone-border'>
+          <h3 className='DropZone-content'>
+            Drop file
           </h3>
-          <input
-            className='DropZone-input'
-            type='file'
-            ref='input'
-            onChange={this.onChange} />
         </div>
       </div>
     );

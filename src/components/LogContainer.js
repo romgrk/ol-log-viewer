@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
-import cx from 'classname';
 
 import Log from './Log';
 
 class LogContainer extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentWillUpdate() {
-    var node = this.refs.container
-    this.shouldScrollBottom = node.scrollTop + node.offsetHeight >= (node.scrollHeight - 50)
+    const node = this.refs.container
+    const scrollTop = node.scrollTop + node.offsetHeight
+    const scrollHeight = node.scrollHeight
+    this.shouldScrollBottom = scrollTop >= scrollHeight
   }
 
   componentDidUpdate() {
     if (this.shouldScrollBottom) {
-      var node = this.refs.container
+      const node = this.refs.container
       node.lastChild.scrollIntoView()
     }
   }

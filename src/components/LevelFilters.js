@@ -19,10 +19,6 @@ const levelClassNames = {
 }
 
 class LevelFilters extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     const { dispatch, levels } = this.props
 
@@ -30,6 +26,7 @@ class LevelFilters extends Component {
       <div className='LevelFilters btn-group'>
         { Object.keys(levels).map(level =>
             <button
+              key={level}
               type="button"
               className={cx('btn btn-default', levelClassNames[level], { active: levels[level] })}
               onClick={() => dispatch(setLevelVisibility(level, !levels[level]))}

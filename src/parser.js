@@ -8,7 +8,7 @@ export function parseLogFile(content) {
 
   return reports.map((report, i) => {
 
-    const lines = report.split('\r\n')
+    const lines = report.split('\r\n').filter(line => !/^\s*$/.test(line))
 
     const firstIndex = lines.findIndex(isProcLine)
     const firstProcLine = lines[firstIndex]
@@ -18,7 +18,9 @@ export function parseLogFile(content) {
     const lastIndex = lines.findIndex(isProcLine)
     const lastProcLine = lines[lastIndex]
 
-    if (lastIndex !== -1)
+    const inProgress = lastIndex === -1
+
+    if (!inProgress)
       lines.splice(lastIndex)
 
     const hasError = lines.some((line) => /^ERROR/.test(line)) 
@@ -38,8 +40,9 @@ export function parseLogFile(content) {
         index:       i
       , process:     process
       , name:        name
+      , inProgress:  inProgress
       , start:       extractTimestamp(firstProcLine)
-      , elapsedTime: lastProcLine ? extractElapsedTime(lastProcLine) : undefined
+      , elapsedTime: !inProgress ? extractElapsedTime(lastProcLine) : undefined
       , lines:       lines.map(parseLine)
       , hasError:    hasError
       , hasWarning:  hasWarning

@@ -1,12 +1,3 @@
-
-window.IS_ELECTRON = window.process ? true : false
-
-if (!window.IS_ELECTRON)
-  window.require = () => ({})
-
-const fs = window.require('fs')
-const { join } = window.require('path')
-
 import './polyfills';
 
 import React from 'react';
@@ -14,15 +5,19 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createLogger } from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
-import { compose, createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 
 import { getNewestFile } from './utils';
-import { setFileByPath } from './actions';
 import { rootReducer } from './reducers';
-//import { setInformation } from './actions';
+import {
+    setFileByPath
+  , updateAllServices
+} from './actions';
 import App from './components/App';
 import './styles.css';
 
+const fs = window.require('fs')
+const { join } = window.require('path')
 
 const logsPath = 'C:\\ProgramData\\Objectif Lune\\PlanetPress Workflow 8\\PlanetPress Watch\\Log'
 
@@ -41,11 +36,16 @@ render(
 )
 
 
-if (window.IS_ELECTRON)
+if (window.IS_ELECTRON) {
+  // Load current log file
   fs.readdir(logsPath, (err, files) => {
     const newestFile = getNewestFile(logsPath, files.filter(f => f.startsWith('ppw')))
     store.dispatch(setFileByPath(join(logsPath, newestFile)))
   })
+
+  // Update services state
+  store.dispatch(updateAllServices())
+}
 
 
 if (module.hot) {
