@@ -33,7 +33,7 @@ export function parseLogFile(content) {
       hasWarning ? 'warning' :
       hasDebug ? 'debug' : 'info'
 
-    const name    = report.match(/WPROC: (\w+)/)[1]
+    const name    = report.match(/WPROC: (.*(?= \(thread id: ))/)[1]
     const process = name.replace(/_[0-9A-Z]{15}$/, '')
 
     return {

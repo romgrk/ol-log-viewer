@@ -48,7 +48,7 @@ const dashLine = regexp(/-+\r\n/)
 const processLog = seq(
   /* 0 */   dashLine
   /* 1 */ , string('WPROC: ')
-  /* 2 */ , regexp(/\S+/)
+  /* 2 */ , regexp(/.*(?= \(thread id: )/)
   /* 3 */ , string(' (thread id: ')
   /* 5 */ , everythingUntil(') - ')
   /* 6 */ , everythingUntil('\r\n')
@@ -61,7 +61,7 @@ const processLog = seq(
 const pendingProcessLog = seq(
   /* 0 */   dashLine
   /* 1 */ , string('WPROC: ')
-  /* 2 */ , regexp(/\S+/)
+  /* 2 */ , regexp(/.*(?= \(thread id: )/)
   /* 3 */ , string(' (thread id: ')
   /* 5 */ , everythingUntil(') - ')
   /* 6 */ , everythingUntil('\r\n')
