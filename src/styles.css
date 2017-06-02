@@ -162,12 +162,12 @@ a, .clickable {
 }.App-filters-bar > * {
   margin-right: 10px;
 }.App-filters-bar .App-process-list {
-  flex: 0 0 250px;
-  width: 250px;
+  flex: 0 1 200px;
+  max-width: 200px;
 }.App-filters-bar .App-search-box {
   flex: 1;
 }.App-filters-bar .App-level-filters {
-  flex: 0 0 350px;
+  flex: 0 0 320px;
 }.App-filters-bar .App-fold-buttons {
   flex: 0 0 80px;
 }.App-filters-bar .App-density-control {

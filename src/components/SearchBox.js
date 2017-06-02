@@ -13,6 +13,7 @@ const mapDispatchToProps = dispatch => ({
 class SearchBox extends Component {
   constructor(props) {
     super(props)
+    this.onKeyDown = this.onKeyDown.bind(this)
     this.onDocumentKeyDown = this.onDocumentKeyDown.bind(this)
   }
 
@@ -31,6 +32,12 @@ class SearchBox extends Component {
     }
   }
 
+  onKeyDown(event) {
+    if (event.key === 'Escape') {
+      this.props.dispatch(setSearch(''))
+    }
+  }
+
   render() {
     const { dispatch, searchValue } = this.props
 
@@ -42,6 +49,7 @@ class SearchBox extends Component {
           className='form-control'
           placeholder='Search for...'
           value={searchValue}
+          onKeyDown={this.onKeyDown}
           onChange={ev => dispatch(setSearch(ev.target.value))}
         />
       </div>
