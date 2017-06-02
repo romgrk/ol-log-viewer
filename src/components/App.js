@@ -17,6 +17,7 @@ import LogContainer from './LogContainer';
 import Select from './Select';
 import FileSelect from './FileSelect';
 import ServiceList from './ServiceList';
+import FoldButtons from './FoldButtons';
 import Icon from './Icon';
 
 const mapStateToProps = state => ({
@@ -90,27 +91,20 @@ class App extends Component {
         <div className='App-view'>
 
           <div className='App-filters navbar-default'>
-            <div className='row'>
-              <div className='col-xs-2'>
+            <div className='App-filters-bar'>
+              <div className='App-process-list'>
                 <ProcessList/>
               </div>
-              <div className='col-xs-2'>
+              <div className='App-search-box'>
                 <SearchBox/>
               </div>
-              <div className='col-xs-5'>
+              <div className='App-level-filters'>
                 <LevelFilters/>
               </div>
-              <div className='col-xs-2'>
-                <div className='btn-group'>
-                  <button className='btn btn-default' onClick={() => dispatch(unfoldAll())}>
-                    <i className='fa fa-plus'/>
-                  </button>
-                  <button className='btn btn-default' onClick={() => dispatch(foldAll())}>
-                    <i className='fa fa-minus'/>
-                  </button>
-                </div>
+              <div className='App-fold-buttons'>
+                <FoldButtons/>
               </div>
-              <div className='col-xs-1'>
+              <div className='App-density-control'>
                 <Select options={densities} value={logDensity} onChange={value => setLogDensity(value)}>
                   <i className='fa fa-th'/>
                 </Select>
