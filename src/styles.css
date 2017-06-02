@@ -265,6 +265,8 @@ a, .clickable {
   width: 2ch;
 }.MultiSelect-list > * {
   white-space: nowrap;
+}.MultiSelect-list.dropdown-menu {
+  padding: 0;
 }
 
 .Select {
@@ -276,6 +278,8 @@ a, .clickable {
 }.Select-list > * {
   white-space: nowrap;
   z-index: 5;
+}.Select-list.dropdown-menu {
+  padding: 0;
 }
 
 .DropDown {

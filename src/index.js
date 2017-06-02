@@ -12,6 +12,7 @@ import { rootReducer } from './reducers';
 import {
     setFileByPath
   , updateAllServices
+  , silentUpdateAllServices
 } from './actions';
 import App from './components/App';
 import './styles.css';
@@ -45,6 +46,8 @@ if (window.IS_ELECTRON) {
 
   // Update services state
   store.dispatch(updateAllServices())
+
+  setInterval(() => store.dispatch(silentUpdateAllServices()), 5000)
 }
 
 

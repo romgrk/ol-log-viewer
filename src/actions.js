@@ -248,6 +248,24 @@ export function updateAllServices() {
 }
 
 // only-on-desktop
+export function silentUpdateAllServices() {
+  return (dispatch, getState) => {
+    const { services } = getState()
+
+    services.forEach(service => {
+      if (service.isUpdating)
+        return
+
+      Services.getState(service.name)
+      .then(result => {
+        dispatch(setServiceState(service.name, result))
+      })
+      .catch(err => console.error(err))
+    })
+  }
+}
+
+// only-on-desktop
 export function stopService(service) {
   return (dispatch, getState) => {
     if (!service.isRunning)
