@@ -28,18 +28,12 @@ const notChar = (char) =>
 const everythingUntil = (str) =>
   custom((success, failure) =>
     (input, i) => {
-      let n     = i
-      let value = ''
+      const startIndex = input.indexOf(str, i)
 
-      while (n < input.length && input.slice(n, n + str.length) !== str) {
-        value += input.charAt(n)
-        n++
-      }
+      if (startIndex === -1)
+        return failure(i, `failed to find "${str}"`)
 
-      if (input.slice(n, n + str.length) === str)
-        return success(n + str.length, value)
-
-      return failure(i, `failed to find "${str}"`)
+      return success(startIndex + str.length, input.slice(i, startIndex))
     })
 
 
