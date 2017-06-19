@@ -13,6 +13,7 @@ import {
   , TOGGLE_SIDEBAR_VISIBILITY
   , SET_LOG_DENSITY
   , SET_LOG_FOLDED
+  , SET_LOG_SHOW_ALL
   , FOLD_ALL
   , UNFOLD_ALL
   , SET_SERVICE_STATE
@@ -130,6 +131,11 @@ function logsReducer(state = [], action) {
     case SET_LOG_FOLDED: {
       const newState = [...state]
       newState[action.index] = { ...newState[action.index], folded: action.folded }
+      return newState
+    }
+    case SET_LOG_SHOW_ALL: {
+      const newState = [...state]
+      newState[action.index] = { ...newState[action.index], showAll: action.showAll }
       return newState
     }
     case FOLD_ALL: {

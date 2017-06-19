@@ -17,8 +17,8 @@ import {
 import App from './components/App';
 import './styles.css';
 
-const fs = window.require('fs')
-const { join } = window.require('path')
+
+window.POLL_SERVICES = false
 
 const logsPath = 'C:\\ProgramData\\Objectif Lune\\PlanetPress Workflow 8\\PlanetPress Watch\\Log'
 
@@ -38,6 +38,9 @@ render(
 
 
 if (window.IS_ELECTRON) {
+  const fs = window.require('fs')
+  const { join } = window.require('path')
+
   // Load current log file
   fs.readdir(logsPath, (err, files) => {
     const newestFile = getNewestFile(logsPath, files.filter(f => f.startsWith('ppw')))
@@ -47,7 +50,7 @@ if (window.IS_ELECTRON) {
   // Update services state
   store.dispatch(updateAllServices())
 
-  setInterval(() => store.dispatch(silentUpdateAllServices()), 5000)
+  setInterval(() => window.POLL_SERVICES && store.dispatch(silentUpdateAllServices()), 5000)
 }
 
 
