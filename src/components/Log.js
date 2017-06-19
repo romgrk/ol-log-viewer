@@ -8,7 +8,8 @@ import {
   renderElapsedTime
 } from '../utils';
 import {
-  setLogFolded
+    setLogFolded
+  , setLogShowAll
 } from '../actions';
 
 const mapStateToProps = state => ({
@@ -16,7 +17,8 @@ const mapStateToProps = state => ({
   density: state.ui.logDensity
 })
 const mapDispatchToProps = dispatch => ({
-  setLogFolded: (index, folded) => dispatch(setLogFolded(index, folded))
+    setLogFolded: (index, folded) => dispatch(setLogFolded(index, folded))
+  , setLogShowAll: (index, showAll) => dispatch(setLogShowAll(index, showAll))
 })
 
 const levelsTrClassNames = {
@@ -36,34 +38,15 @@ const levelsTdClassNames = {
 const MAX_LINES = 10
 
 class Log extends Component {
-  constructor(props) {
-    super(props)
-    this.setFolded = this.setFolded.bind(this)
-    this.setShowAll = this.setShowAll.bind(this)
-    this.state = {
-      folded: false,
-      showAll: false
-    }
-  }
-
-  setFolded(value) {
-    this.setState({ folded: value })
-    if (value === true)
-      this.setShowAll(false)
-  }
-
-  setShowAll(value) {
-    this.setState({ showAll: value })
-  }
-
   render() {
     const {
         density
       , data
       , searchTerms
       , setLogFolded
+      , setLogShowAll
     } = this.props
-    const { showAll } = this.state
+    const showAll  = data.showAll
     const isFolded = data.folded
 
     const visibleLines =
@@ -171,7 +154,7 @@ class Log extends Component {
                   <td
                       className='no-select'
                       colSpan='2'
-                      onClick={() => this.setShowAll(true)}>
+                      onClick={() => setLogShowAll(data.index, !showAll)}>
                     Show all ({hiddenLinesCount} lines not shown)
                   </td>
                 </tr>

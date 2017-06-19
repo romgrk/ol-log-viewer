@@ -26,8 +26,10 @@ export const SET_LEVEL_VISIBILITY   = 'SET_LEVEL_VISIBILITY'
 
 export const SET_SIDEBAR_VISIBILITY = 'SET_SIDEBAR_VISIBILITY'
 export const TOGGLE_SIDEBAR_VISIBILITY = 'TOGGLE_SIDEBAR_VISIBILITY'
-export const SET_LOG_DENSITY = 'SET_LOG_DENSITY'
-export const SET_LOG_FOLDED  = 'SET_LOG_FOLDED'
+
+export const SET_LOG_DENSITY  = 'SET_LOG_DENSITY'
+export const SET_LOG_FOLDED   = 'SET_LOG_FOLDED'
+export const SET_LOG_SHOW_ALL = 'SET_LOG_SHOW_ALL'
 
 export const UNFOLD_ALL = 'UNFOLD_ALL'
 export const FOLD_ALL   = 'FOLD_ALL'
@@ -121,6 +123,7 @@ export function setLogs(content) {
 
     logs.forEach(log => {
       log.folded = log.type === 'process' ? false : true
+      log.showAll = false
       processes[log.process] = true
     })
 
@@ -138,6 +141,14 @@ export function setLogFolded(index, folded) {
     type: SET_LOG_FOLDED,
     index,
     folded
+  }
+}
+
+export function setLogShowAll(index, showAll) {
+  return {
+    type: SET_LOG_SHOW_ALL,
+    index,
+    showAll
   }
 }
 
