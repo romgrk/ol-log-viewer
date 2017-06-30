@@ -16,6 +16,7 @@
     "react-dom": "^15.5.4",
     "react-highlight-words": "^0.7.2",
     "react-redux": "^5.0.4",
+    "react-virtualized": "^9.8.0",
     "redux": "^3.6.0",
     "redux-logger": "^3.0.1",
     "redux-thunk": "^2.2.0",
@@ -34,7 +35,7 @@
     "package": "rm -rf dist && mkdir dist && cd dist && electron-packager ../ ol-log-viewer --platform=win32",
     "build-all": "npm run build && npm run package",
     "dev": "nf start",
-    "electron": "electron .",
+    "electron": "electron --js-flags=\"--max-old-space-size=4096\" .",
     "electron-dev": "set ELECTRON_START_URL=http://localhost:3000 && electron ."
   }
 }

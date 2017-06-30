@@ -138,6 +138,7 @@ function extractProcessLog(result, i) {
     , start:       extractTimestamp(startTime)
     , elapsedTime: elapsedTime
     , lines:       lines.map(parseLine)
+    , length:      content.split('\n').length
     , hasError:    hasError
     , hasWarning:  hasWarning
     , hasDebug:    hasDebug
@@ -177,6 +178,7 @@ function extractStartLog(result, i) {
     , stop:        stop
     , elapsedTime: elapsedTime
     , lines:       lines.map(parseLine)
+    , length:      result.length
     , hasError:    hasError
     , hasWarning:  hasWarning
     , hasDebug:    hasDebug

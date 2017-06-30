@@ -9,7 +9,9 @@ import {
 
 export function createDefaultUI() {
   return {
-    logDensity: LOG_DENSITY.SMALL
+    logDensity: LOG_DENSITY.SMALL,
+    lastFoldedIndex: 0,
+    lastFoldedTimestamp: undefined,
   }
 }
 
