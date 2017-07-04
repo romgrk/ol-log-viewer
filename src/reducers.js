@@ -16,6 +16,7 @@ import {
   , SET_LOG_SHOW_ALL
   , FOLD_ALL
   , UNFOLD_ALL
+  , SCROLL_BOTTOM
   , SET_SERVICE_STATE
   , UPDATE_SERVICE_STATE
 } from './actions';
@@ -60,6 +61,9 @@ function uiReducer(state = createDefaultUI(), action) {
     }
     case SET_SIDEBAR_VISIBILITY: {
       return { ...state, sidebar: action.visible }
+    }
+    case SCROLL_BOTTOM: {
+      return { ...state, lastScrollBottom: +new Date() }
     }
     // for react-virtualized List recomputeHeight
     case SET_LOGS: {

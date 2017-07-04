@@ -8,6 +8,7 @@ import Log from './Log';
 const mapStateToProps = state => ({
     lastFoldedIndex:     state.ui.lastFoldedIndex
   , lastFoldedTimestamp: state.ui.lastFoldedTimestamp
+  , lastScrollBottom:    state.ui.lastScrollBottom
 })
 
 class LogContainer extends Component {
@@ -25,6 +26,15 @@ class LogContainer extends Component {
     this.renderRow   = this.renderRow.bind(this)
   }
 
+  scrollBottom() {
+    setImmediate(() => {
+      this.list.scrollToRow(this.props.logs.length)
+
+      const node = this.list.Grid._scrollingContainer
+      node.scrollTop = node.scrollHeight + node.offsetHeight
+    })
+  }
+
   componentWillUpdate() {
     const node = this.list.Grid._scrollingContainer
     const scrollTop    = node.scrollTop + node.offsetHeight + 50
@@ -35,12 +45,7 @@ class LogContainer extends Component {
 
   componentDidUpdate() {
     if (this.shouldScrollBottom) {
-      setImmediate(() => {
-        this.list.scrollToRow(this.props.logs.length)
-
-        const node = this.list.Grid._scrollingContainer
-        node.scrollTop = node.scrollHeight + node.offsetHeight
-      })
+      this.scrollBottom()
     }
     this.updateRowHeights()
   }
@@ -88,6 +93,11 @@ class LogContainer extends Component {
     const { logs } = this.props
 
     window.list = this.list
+
+    if (this.lastScrollBottom !== this.props.lastScrollBottom) {
+      this.lastScrollBottom = this.props.lastScrollBottom
+      this.scrollBottom()
+    }
 
     return (
       <AutoSizer ref='container'>

@@ -18,6 +18,7 @@ import Select from './Select';
 import FileSelect from './FileSelect';
 import ServiceList from './ServiceList';
 import FoldButtons from './FoldButtons';
+import ScrollButtons from './ScrollButtons';
 import Icon from './Icon';
 
 const mapStateToProps = state => ({
@@ -111,11 +112,12 @@ class App extends Component {
               </div>
             </div>
             <br/>
-            <div className='row'>
-              <div className='col-xs-8'>
+            <div className='App-filters-sub-bar'>
+              <div className='App-filters-results'>
                 Results: <b>{ visibleLogs.length }</b> (<b>{ logs.length}</b> total)
               </div>
-              <div className='col-xs-4'>
+              <div className='App-filters-scroll-buttons'>
+                <ScrollButtons/>
               </div>
             </div>
             <br/>

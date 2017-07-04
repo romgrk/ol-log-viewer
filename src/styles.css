@@ -158,10 +158,10 @@ a, .clickable {
   margin-left: -15px;
   margin-right: -15px;
   display: flex;
-}.App-filters-bar > *:first-child {
-  margin-left: 10px;
+}.App-filters-bar > *:not(:last-child) {
+  margin-left:  15px;
 }.App-filters-bar > * {
-  margin-right: 10px;
+  margin-right: 15px;
 }.App-filters-bar .App-process-list {
   flex: 0 1 200px;
   max-width: 200px;
@@ -172,6 +172,12 @@ a, .clickable {
 }.App-filters-bar .App-fold-buttons {
   flex: 0 0 80px;
 }.App-filters-bar .App-density-control {
+  flex: 0;
+}.App-filters-sub-bar {
+  display: flex;
+}.App-filters-sub-bar .App-filters-results {
+  flex: 1;
+}.App-filters-sub-bar .App-filters-scroll-buttons {
   flex: 0;
 }.App-content {
   flex: 1 0;

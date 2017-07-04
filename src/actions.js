@@ -31,8 +31,9 @@ export const SET_LOG_DENSITY  = 'SET_LOG_DENSITY'
 export const SET_LOG_FOLDED   = 'SET_LOG_FOLDED'
 export const SET_LOG_SHOW_ALL = 'SET_LOG_SHOW_ALL'
 
-export const UNFOLD_ALL = 'UNFOLD_ALL'
-export const FOLD_ALL   = 'FOLD_ALL'
+export const UNFOLD_ALL    = 'UNFOLD_ALL'
+export const FOLD_ALL      = 'FOLD_ALL'
+export const SCROLL_BOTTOM = 'SCROLL_BOTTOM'
 
 export const SET_SERVICE_STATE    = 'SET_SERVICE_STATE'
 export const UPDATE_SERVICE_STATE = 'UPDATE_SERVICE_STATE'
@@ -161,6 +162,13 @@ export function foldAll() {
 export function unfoldAll() {
   return {
     type: UNFOLD_ALL
+  }
+}
+
+
+export function scrollBottom() {
+  return {
+    type: SCROLL_BOTTOM
   }
 }
 
