@@ -146,6 +146,7 @@ a, .clickable {
   content: ' ';
   display: inline-block;
   position: absolute;
+  z-index: 1;
   bottom: -10px;
   left: 0;
   height: 10px;

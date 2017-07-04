@@ -62,6 +62,9 @@ function uiReducer(state = createDefaultUI(), action) {
       return { ...state, sidebar: action.visible }
     }
     // for react-virtualized List recomputeHeight
+    case SET_LOGS: {
+      return { ...state, lastFoldedIndex: -1, lastFoldedTimestamp: +new Date() }
+    }
     case SET_LOG_FOLDED: {
       return { ...state, lastFoldedIndex: action.index, lastFoldedTimestamp: +new Date() }
     }
@@ -69,10 +72,10 @@ function uiReducer(state = createDefaultUI(), action) {
       return { ...state, lastFoldedIndex: action.index, lastFoldedTimestamp: +new Date() }
     }
     case FOLD_ALL: {
-      return { ...state, lastFoldedIndex: 0, lastFoldedTimestamp: +new Date() }
+      return { ...state, lastFoldedIndex: -1, lastFoldedTimestamp: +new Date() }
     }
     case UNFOLD_ALL: {
-      return { ...state, lastFoldedIndex: 0, lastFoldedTimestamp: +new Date() }
+      return { ...state, lastFoldedIndex: -1, lastFoldedTimestamp: +new Date() }
     }
     default:
       return state;

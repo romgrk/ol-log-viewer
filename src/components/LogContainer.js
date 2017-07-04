@@ -20,25 +20,27 @@ class LogContainer extends Component {
       fixedWidth: true,
       defaultHeight: (67 + 12) + 10 * 24
     })
-    console.log(this.cache)
 
-    this.renderRow = this.renderRow.bind(this)
-    this.getRowHeight = this.getRowHeight.bind(this)
+    this.renderEmpty = this.renderEmpty.bind(this)
+    this.renderRow   = this.renderRow.bind(this)
   }
 
   componentWillUpdate() {
-    //const node = this.refs.container
     const node = this.list.Grid._scrollingContainer
-    const scrollTop = node.scrollTop + node.offsetHeight
+    const scrollTop    = node.scrollTop + node.offsetHeight + 50
     const scrollHeight = node.scrollHeight
+
     this.shouldScrollBottom = scrollTop >= scrollHeight
-    //debugger
-    this.updateRowHeights()
   }
 
   componentDidUpdate() {
     if (this.shouldScrollBottom) {
-      this.list.scrollToRow(this.props.logs.length)
+      setImmediate(() => {
+        this.list.scrollToRow(this.props.logs.length)
+
+        const node = this.list.Grid._scrollingContainer
+        node.scrollTop = node.scrollHeight + node.offsetHeight
+      })
     }
     this.updateRowHeights()
   }
@@ -50,15 +52,18 @@ class LogContainer extends Component {
   updateRowHeights() {
     if (this.lastFoldedTimestamp !== this.props.lastFoldedTimestamp) {
       this.lastFoldedTimestamp = this.props.lastFoldedTimestamp
-      debugger
-      this.list.recomputeRowHeights(this.props.lastFoldedIndex)
+
+      if (this.props.lastFoldedIndex === -1)
+        this.cache.clearAll()
+      else
+        this.cache.clear(this.props.lastFoldedIndex, 0)
+
+      this.list.recomputeRowHeights(this.props.lastFoldedIndex === -1 ? 0 : this.props.lastFoldedIndex)
       this.list.forceUpdateGrid()
     }
   }
 
   renderRow({ index, parent, isScrolling, key, style }) {
-    const cx = `--${this.getRowHeight({ index })}__lines_${this.props.logs[index].lines.length}`
-    delete style.height
     return (
       <CellMeasurer
           cache={this.cache}
@@ -66,41 +71,36 @@ class LogContainer extends Component {
           columnIndex={0}
           rowIndex={index}
           key={key}>
-        <div style={style} className={cx}>
+        <div style={style}>
           <Log data={this.props.logs[index]} />
         </div>
       </CellMeasurer>
     )
   }
 
-  getRowHeight({ index }) {
-    const log = this.props.logs[index]
-    const lines = log.lines.length
-
-    if (log.folded)
-      return (43 + 12)
-
-    if (log.showAll)
-      return 50 + lines * 24
-
-    return (67 + 12) + Math.min(lines, 10) * 24
+  renderEmpty() {
+    return (
+      <div className='LogContainer-empty'>No visible logs</div>
+    )
   }
 
   render() {
     const { logs } = this.props
+
+    window.list = this.list
 
     return (
       <AutoSizer ref='container'>
       {
         ({width, height}) => (
           <List className='LogContainer'
-            ref={(ref) => this.list = ref}
+            ref={(ref) =>  this.list = ref }
             height={height}
             width={width}
             overscanRowCount={10}
             rowCount={logs.length}
             rowHeight={this.cache.rowHeight}
-            noRowsRenderer={() => <div className='LogContainer-empty'>No visible logs</div>}
+            noRowsRenderer={this.renderEmpty}
             rowRenderer={this.renderRow}
           />
         )
