@@ -8,6 +8,7 @@ const { join } = window.require('path')
 import iconv from 'iconv-lite';
 import detect from 'charset-detector';
 import leftpad from 'leftpad';
+import rightpad from 'rightpad';
 
 import { INPUT_ENCODING } from './constants';
 
@@ -107,7 +108,7 @@ export function parseTime(timeString) {
   const hours        = +m[1]
   const minutes      = +m[2]
   const seconds      = +m[3]
-  const milliseconds = +m[4] || 0
+  const milliseconds = +rightpad(m[4], 3, '0') || 0
   return [hours, minutes, seconds, milliseconds]
 }
 
@@ -164,9 +165,9 @@ export function renderElapsedTime(time) {
     return `${minutes}m ${seconds}s`
 
   if (seconds > 0)
-    return `${seconds}.${milliseconds}s`
+    return `${seconds}.${leftpad(milliseconds, 3, '0')}s`
 
-  return `${seconds}.${milliseconds}s`
+  return `${seconds}.${leftpad(milliseconds, 3, '0')}s`
 }
 
 /*
