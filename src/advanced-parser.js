@@ -128,12 +128,14 @@ function extractProcessLog(result, i) {
     hasDebug ? 'debug' : 'info'
 
   const process = name.replace(/_[0-9A-Z]{15}$/, '')
+  const runtimeName = process === name ? process : process + '__[replicated]__'
 
   return {
       type: 'process'
     , index:       i
     , process:     process
     , name:        name
+    , runtimeName: runtimeName
     , inProgress:  inProgress
     , start:       extractTimestamp(startTime)
     , elapsedTime: elapsedTime
@@ -173,6 +175,7 @@ function extractStartLog(result, i) {
     , index:       i
     , process:     'start/stop'
     , name:        'start/stop'
+    , runtimeName: 'start/stop'
     , inProgress:  false
     , start:       start
     , stop:        stop

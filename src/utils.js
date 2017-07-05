@@ -64,10 +64,10 @@ export function associateRuntimePerformance(logs) {
 
   logs.forEach(log => {
     if (log.elapsedTime) {
-      if (!processes[log.process])
-        processes[log.process] = []
+      if (!processes[log.runtimeName])
+        processes[log.runtimeName] = []
 
-      processes[log.process].push(getMilliseconds(parseTime(log.elapsedTime)))
+      processes[log.runtimeName].push(getMilliseconds(parseTime(log.elapsedTime)))
     }
   })
 
@@ -77,10 +77,12 @@ export function associateRuntimePerformance(logs) {
       / (processes[p].length || 1)
   })
 
+  console.log(processes)
+
   logs.forEach(log => {
     if (log.elapsedTime) {
       log.ratio =
-        getMilliseconds(parseTime(log.elapsedTime)) / processes[log.process]
+        getMilliseconds(parseTime(log.elapsedTime)) / processes[log.runtimeName]
     }
   })
 
