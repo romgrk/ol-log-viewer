@@ -18,7 +18,7 @@ import App from './components/App';
 import './styles.css';
 
 
-window.POLL_SERVICES = false
+window.POLL_SERVICES = false || process.env.NODE_ENV === 'production'
 
 const logsPath = 'C:\\ProgramData\\Objectif Lune\\PlanetPress Workflow 8\\PlanetPress Watch\\Log'
 
