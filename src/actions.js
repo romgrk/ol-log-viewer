@@ -35,6 +35,8 @@ export const UNFOLD_ALL    = 'UNFOLD_ALL'
 export const FOLD_ALL      = 'FOLD_ALL'
 export const SCROLL_BOTTOM = 'SCROLL_BOTTOM'
 
+export const RESIZE = 'RESIZE'
+
 export const SET_SERVICE_STATE    = 'SET_SERVICE_STATE'
 export const UPDATE_SERVICE_STATE = 'UPDATE_SERVICE_STATE'
 
@@ -165,12 +167,19 @@ export function unfoldAll() {
   }
 }
 
-
 export function scrollBottom() {
   return {
     type: SCROLL_BOTTOM
   }
 }
+
+export function resize() {
+  return {
+    type: RESIZE
+  }
+}
+
+
 
 
 export function setSearch(value) {

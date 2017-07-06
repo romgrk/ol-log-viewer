@@ -17,6 +17,7 @@ import {
   , FOLD_ALL
   , UNFOLD_ALL
   , SCROLL_BOTTOM
+  , RESIZE
   , SET_SERVICE_STATE
   , UPDATE_SERVICE_STATE
 } from './actions';
@@ -66,6 +67,9 @@ function uiReducer(state = createDefaultUI(), action) {
       return { ...state, lastScrollBottom: +new Date() }
     }
     // for react-virtualized List recomputeHeight
+    case RESIZE: {
+      return { ...state, lastFoldedIndex: -1, lastFoldedTimestamp: +new Date() }
+    }
     case SET_LOGS: {
       return { ...state, lastFoldedIndex: -1, lastFoldedTimestamp: +new Date() }
     }

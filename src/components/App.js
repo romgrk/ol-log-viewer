@@ -6,6 +6,7 @@ import {
   , setLogDensity
   , unfoldAll
   , foldAll
+  , resize
   , toggleSidebarVisibility
 } from '../actions'
 import { LOG_DENSITY } from '../constants';
@@ -32,6 +33,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     setLogDensity: value => dispatch(setLogDensity(value))
   , onChangeFile:  file => dispatch(setFile(file))
+  , onResize:        () => dispatch(resize())
   , dispatch
 })
 
@@ -46,14 +48,21 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.onDocumentKeyDown = this.onDocumentKeyDown.bind(this)
+    this.onWindowResize = this.onWindowResize.bind(this)
   }
 
   componentDidMount() {
     document.addEventListener('keydown', this.onDocumentKeyDown)
+    window.addEventListener('resize', this.onWindowResize)
   }
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.onDocumentKeyDown)
+    window.removeEventListener('resize', this.onWindowResize)
+  }
+
+  onWindowResize() {
+    setImmediate(this.props.onResize)
   }
 
   onDocumentKeyDown(event) {
