@@ -58,10 +58,14 @@ class LogContainer extends Component {
     if (this.lastFoldedTimestamp !== this.props.lastFoldedTimestamp) {
       this.lastFoldedTimestamp = this.props.lastFoldedTimestamp
 
-      if (this.props.lastFoldedIndex === -1)
-        this.cache.clearAll()
-      else
-        this.cache.clear(this.props.lastFoldedIndex, 0)
+      /* // TODO(romgrk): lastFoldedIndex is the log index, here we need the
+       * //               list item index.
+       * if (this.props.lastFoldedIndex === -1)
+       *  this.cache.clearAll()
+       *else
+       *  this.cache.clear(this.props.lastFoldedIndex, 0)*/
+
+      this.cache.clearAll()
 
       this.list.recomputeRowHeights(this.props.lastFoldedIndex === -1 ? 0 : this.props.lastFoldedIndex)
       this.list.forceUpdateGrid()
