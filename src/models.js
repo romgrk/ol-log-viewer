@@ -12,7 +12,8 @@ export function createDefaultUI() {
     logDensity: LOG_DENSITY.SMALL,
     lastFoldedIndex: 0,
     lastFoldedTimestamp: undefined,
-    lastScrollToEnd: undefined,
+    lastScrollBottom: undefined,
+    lastScrollTop: undefined,
   }
 }
 

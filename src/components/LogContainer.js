@@ -9,6 +9,7 @@ const mapStateToProps = state => ({
     lastFoldedIndex:     state.ui.lastFoldedIndex
   , lastFoldedTimestamp: state.ui.lastFoldedTimestamp
   , lastScrollBottom:    state.ui.lastScrollBottom
+  , lastScrollTop:       state.ui.lastScrollTop
 })
 
 class LogContainer extends Component {
@@ -28,8 +29,15 @@ class LogContainer extends Component {
 
   scrollBottom() {
     setImmediate(() => {
-      this.list.scrollToRow(this.props.logs.length)
+      this.list.scrollToRow(0)
+      const node = this.list.Grid._scrollingContainer
+      node.scrollTop = 0
+    })
+  }
 
+  scrollBottom() {
+    setImmediate(() => {
+      this.list.scrollToRow(this.props.logs.length)
       const node = this.list.Grid._scrollingContainer
       node.scrollTop = node.scrollHeight + node.offsetHeight
     })
@@ -101,6 +109,11 @@ class LogContainer extends Component {
     if (this.lastScrollBottom !== this.props.lastScrollBottom) {
       this.lastScrollBottom = this.props.lastScrollBottom
       this.scrollBottom()
+    }
+
+    if (this.lastScrollTop !== this.props.lastScrollTop) {
+      this.lastScrollTop = this.props.lastScrollTop
+      this.scrollTop()
     }
 
     return (

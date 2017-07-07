@@ -195,6 +195,11 @@ a, .clickable {
   opacity: 0.4;
 }
 
+.ScrollButtons {
+  min-width: 80px;
+}
+
+
 .ServiceList {
 }.ServiceList a .DropDown {
   visibility: hidden;

@@ -34,6 +34,7 @@ export const SET_LOG_SHOW_ALL = 'SET_LOG_SHOW_ALL'
 export const UNFOLD_ALL    = 'UNFOLD_ALL'
 export const FOLD_ALL      = 'FOLD_ALL'
 export const SCROLL_BOTTOM = 'SCROLL_BOTTOM'
+export const SCROLL_TOP    = 'SCROLL_TOP'
 
 export const RESIZE = 'RESIZE'
 
@@ -170,6 +171,12 @@ export function unfoldAll() {
 export function scrollBottom() {
   return {
     type: SCROLL_BOTTOM
+  }
+}
+
+export function scrollTop() {
+  return {
+    type: SCROLL_TOP
   }
 }
 
