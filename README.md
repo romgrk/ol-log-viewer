@@ -1,13 +1,17 @@
 # ol-log-viewer
 
+![ol-log-viewer](https://raw.githubusercontent.com/romgrk/ol-log-viewer/master/static/viewer-service-control.png)
+
 Install:
 ```
-$ npm install -g create-react-app
-$ cd path/to/ol-log-viewer
+$ git clone https://github.com/romgrk/ol-log-viewer
+$ cd ol-log-viewer
 $ npm install
+$ npm run build-all
 ```
+Will create a `dist/` folder, containing an executable file.
 
-Run:
+Development:
 ```
 $ npm run dev
 ```
