@@ -73,6 +73,15 @@ function uiReducer(state = createDefaultUI(), action) {
     case SET_LOGS: {
       return { ...state, lastFoldedIndex: -1, lastFoldedTimestamp: +new Date() }
     }
+    case SET_SEARCH: {
+      return { ...state, lastFoldedIndex: -1, lastFoldedTimestamp: +new Date() }
+    }
+    case SET_PROCESS_VISIBILITY: {
+      return { ...state, lastFoldedIndex: -1, lastFoldedTimestamp: +new Date() }
+    }
+    case SET_LEVEL_VISIBILITY: {
+      return { ...state, lastFoldedIndex: -1, lastFoldedTimestamp: +new Date() }
+    }
     case SET_LOG_FOLDED: {
       return { ...state, lastFoldedIndex: action.index, lastFoldedTimestamp: +new Date() }
     }
