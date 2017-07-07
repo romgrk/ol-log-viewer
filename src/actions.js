@@ -35,6 +35,7 @@ export const UNFOLD_ALL    = 'UNFOLD_ALL'
 export const FOLD_ALL      = 'FOLD_ALL'
 export const SCROLL_BOTTOM = 'SCROLL_BOTTOM'
 export const SCROLL_TOP    = 'SCROLL_TOP'
+export const SET_SCROLL    = 'SET_SCROLL'
 
 export const RESIZE = 'RESIZE'
 
@@ -136,7 +137,11 @@ export function setLogs(content) {
         processes[process] = false
     })
 
-    dispatch({ type: SET_LOGS, logs: logs, processes: processes })
+    const hasNewLogs =
+          (logs.length > state.logs.length)
+      || ((logs.length == state.logs.length) && state.ui.hasNewLogs)
+
+    dispatch({ type: SET_LOGS, logs, processes, hasNewLogs })
   }
 }
 
@@ -177,6 +182,13 @@ export function scrollBottom() {
 export function scrollTop() {
   return {
     type: SCROLL_TOP
+  }
+}
+
+export function setScroll(scroll) {
+  return {
+    type: SET_SCROLL,
+    scroll
   }
 }
 

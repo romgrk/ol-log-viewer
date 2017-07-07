@@ -14,6 +14,7 @@ export function createDefaultUI() {
     lastFoldedTimestamp: undefined,
     lastScrollBottom: undefined,
     lastScrollTop: undefined,
+    scroll: { current: 0, max: 0 },
   }
 }
 

@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { List, AutoSizer, CellMeasurer, CellMeasurerCache } from 'react-virtualized';
 
+import {
+  setScroll
+} from '../actions';
 import Log from './Log';
 
 
@@ -10,6 +13,11 @@ const mapStateToProps = state => ({
   , lastFoldedTimestamp: state.ui.lastFoldedTimestamp
   , lastScrollBottom:    state.ui.lastScrollBottom
   , lastScrollTop:       state.ui.lastScrollTop
+})
+
+const mapDispatchToProps = dispatch => ({
+  onScroll: ev =>
+    dispatch(setScroll({ current: ev.scrollTop + ev.clientHeight, max: ev.scrollHeight }))
 })
 
 class LogContainer extends Component {
@@ -102,7 +110,10 @@ class LogContainer extends Component {
   }
 
   render() {
-    const { logs } = this.props
+    const {
+      logs,
+      onScroll
+    } = this.props
 
     window.list = this.list
 
@@ -129,6 +140,7 @@ class LogContainer extends Component {
             rowHeight={this.cache.rowHeight}
             noRowsRenderer={this.renderEmpty}
             rowRenderer={this.renderRow}
+            onScroll={onScroll}
           />
         )
       }
@@ -137,4 +149,7 @@ class LogContainer extends Component {
   }
 }
 
-export default connect(mapStateToProps)(LogContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LogContainer);

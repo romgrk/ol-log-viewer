@@ -71,8 +71,6 @@ class Log extends Component {
     const tableClassName = cx(
       'table table-logs', {
         'hidden':        isFolded,
-        'slide--show':  !isFolded,
-        'slide--hide':   isFolded,
         'table--small':  density === LOG_DENSITY.SMALL,
         'table--medium': density === LOG_DENSITY.MEDIUM,
         'table--large':  density === LOG_DENSITY.LARGE

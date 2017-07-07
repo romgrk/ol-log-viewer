@@ -18,6 +18,7 @@ import {
   , UNFOLD_ALL
   , SCROLL_BOTTOM
   , SCROLL_TOP
+  , SET_SCROLL
   , RESIZE
   , SET_SERVICE_STATE
   , UPDATE_SERVICE_STATE
@@ -70,12 +71,17 @@ function uiReducer(state = createDefaultUI(), action) {
     case SCROLL_BOTTOM: {
       return { ...state, lastScrollBottom: +new Date() }
     }
+    case SET_SCROLL: {
+      const canSeeNewLogs = state.scroll.current >= (state.scroll.max - 200)
+      return { ...state, scroll: action.scroll, hasNewLogs: state.hasNewLogs && !canSeeNewLogs }
+    }
     // for react-virtualized List recomputeHeight
     case RESIZE: {
       return { ...state, lastFoldedIndex: -1, lastFoldedTimestamp: +new Date() }
     }
     case SET_LOGS: {
-      return { ...state, lastFoldedIndex: -1, lastFoldedTimestamp: +new Date() }
+      const canSeeNewLogs = state.scroll.current >= (state.scroll.max - 200)
+      return { ...state, lastFoldedIndex: -1, lastFoldedTimestamp: +new Date(), hasNewLogs: action.hasNewLogs && !canSeeNewLogs }
     }
     case SET_SEARCH: {
       return { ...state, lastFoldedIndex: -1, lastFoldedTimestamp: +new Date() }

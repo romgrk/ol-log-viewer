@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import cx from 'classname';
 
 import {
     scrollBottom
@@ -7,6 +8,7 @@ import {
 } from '../actions'
 
 const mapStateToProps = state => ({
+  hasNewLogs: state.ui.hasNewLogs
 })
 const mapDispatchToProps = dispatch => ({
   onScrollBottom: () => dispatch(scrollBottom()),
@@ -15,14 +17,20 @@ const mapDispatchToProps = dispatch => ({
 
 class FoldButtons extends Component {
   render() {
-    const { onScrollBottom, onScrollTop } = this.props
+    const {
+        onScrollBottom
+      , onScrollTop
+      , hasNewLogs
+    } = this.props
+
+    const scrollBottomCx = cx('btn btn-default', { 'btn-blinking': hasNewLogs })
 
     return (
       <div className='ScrollButtons btn-group'>
         <button className='btn btn-default' onClick={onScrollTop}>
           <i className='fa fa-chevron-up'/>
         </button>
-        <button className='btn btn-default' onClick={onScrollBottom}>
+        <button className={scrollBottomCx} onClick={onScrollBottom}>
           <i className='fa fa-chevron-down'/>
         </button>
       </div>
