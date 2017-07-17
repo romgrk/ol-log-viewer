@@ -35,7 +35,8 @@ class LogContainer extends Component {
     this.renderRow   = this.renderRow.bind(this)
   }
 
-  scrollBottom() {
+  scrollTop() {
+    this.shouldScrollBottom = false
     setImmediate(() => {
       this.list.scrollToRow(0)
       const node = this.list.Grid._scrollingContainer
@@ -48,6 +49,7 @@ class LogContainer extends Component {
       this.list.scrollToRow(this.props.logs.length)
       const node = this.list.Grid._scrollingContainer
       node.scrollTop = node.scrollHeight + node.offsetHeight
+      this.shouldScrollBottom = false
     })
   }
 
