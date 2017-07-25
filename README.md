@@ -14,6 +14,8 @@ Features:
      average; red icon when over 2 times the average. (Average is calculated
      only for processes with the same name)
 
+[Download from the releases page](https://github.com/romgrk/ol-log-viewer/releases)
+
 
 ### Install & build:
 
